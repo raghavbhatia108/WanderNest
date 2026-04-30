@@ -95,22 +95,32 @@ body {
 }
 
 /* Search bar */
-.search-bar { position: relative; display: flex; align-items: center; }
+.search-bar { display: flex; align-items: center; gap: 0.5rem; }
+
+/* Wrapper ensures icon always stays scoped to just the input */
+.input-with-icon {
+  position: relative;
+  width: 240px;
+  flex-shrink: 0;
+}
 
 .search-icon-inside {
   position: absolute;
-  left: 0.875rem;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-muted);
   pointer-events: none;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  z-index: 2;
 }
 
 .search-inp {
   border: 1.5px solid var(--border);
   border-radius: 50px;
-  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  padding: 0.5rem 1rem 0.5rem 2.75rem;
   font-size: 0.875rem;
-  width: 240px;
+  width: 100%;
   transition: border-color var(--transition), box-shadow var(--transition);
   background: var(--bg);
 }
@@ -345,8 +355,10 @@ footer {
   align-items: center;
   gap: 0.3rem;
   padding: 0.5rem 0.9rem;
-  border-radius: 50px;
-  border: 1.5px solid transparent;
+  padding-bottom: 0.65rem;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid transparent;
   background: transparent;
   cursor: pointer;
   transition: all var(--transition);
@@ -358,9 +370,14 @@ footer {
 .filter-btn i { font-size: 1.1rem; }
 .filter-btn span { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
 
-.filter-btn:hover, .filter-btn.active {
-  border-color: var(--text-dark);
+.filter-btn:hover {
   color: var(--text-dark);
+  border-bottom-color: var(--border);
+}
+
+.filter-btn.active {
+  color: var(--text-dark);
+  border-bottom-color: var(--text-dark);
 }
 
 .tax-toggle-wrap {
@@ -1005,6 +1022,32 @@ footer {
 
 .error-card p { color: var(--text-muted); margin-bottom: 1.5rem; }
 
+/* Mobile search button (icon only, shown beside hamburger) */
+.btn-mobile-search {
+  background: none;
+  border: none;
+  color: var(--text-mid);
+  font-size: 1rem;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Nav greeting */
+.nav-greeting {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding: 0 0.25rem;
+}
+
+/* Plain nav link (no pill styling) */
+.nav-link-plain {
+  background: none !important;
+  border: none !important;
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
@@ -1014,20 +1057,65 @@ footer {
   .price-card { position: static; }
 }
 
+/* Tablet */
 @media (max-width: 768px) {
   .show-header h1 { font-size: 1.35rem; }
   .show-img { height: 38vh; }
   .form-card { padding: 1.5rem; }
   .auth-card { padding: 1.75rem; }
-  .search-inp { width: 160px; }
+  .input-with-icon { width: 160px; }
   .listings-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
   .footer-top { flex-direction: column; align-items: flex-start; }
   .footer-links { gap: 1.25rem; }
 }
 
+/* Mobile — navbar collapsed panel */
+@media (max-width: 767px) {
+  /* Search takes full width in collapsed panel */
+  .search-wrap { width: 100%; }
+  .input-with-icon { width: 100%; }
+  .search-inp { border-radius: var(--radius-sm); }
+  .search-bar { flex-wrap: wrap; gap: 0.5rem; }
+  .btn-search {
+    border-radius: var(--radius-sm);
+    flex: 1;
+    margin-left: 0;
+  }
+
+  /* Nav actions stack cleanly */
+  .nav-actions {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.4rem !important;
+    padding-bottom: 0.75rem;
+  }
+
+  /* All nav links become full-width blocks */
+  .nav-actions .nav-link {
+    display: block;
+    text-align: center;
+    padding: 0.6rem 1rem !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  /* Keep pill styling but block width on mobile */
+  .nav-actions .btn-nav-add,
+  .nav-actions .btn-nav-signup,
+  .nav-actions .btn-nav-login {
+    border-radius: var(--radius-sm) !important;
+    text-align: center;
+  }
+
+  /* Collapsed nav gets proper top padding */
+  #mainNav.show {
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+    margin-top: 0.75rem;
+  }
+}
+
 @media (max-width: 576px) {
   .show-img { height: 30vh; }
-  .search-inp { width: 130px; }
   .listings-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
   .review-grid { grid-template-columns: 1fr; }
   .form-card { padding: 1.25rem; }
@@ -1037,5 +1125,4 @@ footer {
 
 @media (max-width: 400px) {
   .listings-grid { grid-template-columns: 1fr; }
-  .search-inp, .btn-search { display: none; }
 }

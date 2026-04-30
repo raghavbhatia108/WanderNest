@@ -33,15 +33,25 @@
     <div class="show-details">
 
       <!-- Host info -->
-      <div class="show-host">
-        <div class="host-avatar">
-          <%= foundListing.owner.username.charAt(0) %>
+      <% if (foundListing.owner) { %>
+        <div class="show-host">
+          <div class="host-avatar">
+            <%= foundListing.owner.username.charAt(0) %>
+          </div>
+          <div class="host-info">
+            <h6>Hosted by <%= foundListing.owner.username %></h6>
+            <p>Superhost · WanderNest verified</p>
+          </div>
         </div>
-        <div class="host-info">
-          <h6>Hosted by <%= foundListing.owner.username %></h6>
-          <p>Superhost · WanderNest verified</p>
+      <% } else { %>
+        <div class="show-host">
+          <div class="host-avatar">W</div>
+          <div class="host-info">
+            <h6>Hosted by WanderNest</h6>
+            <p>Superhost · WanderNest verified</p>
+          </div>
         </div>
-      </div>
+      <% } %>
 
       <!-- Detail pills -->
       <div class="detail-pills">
@@ -72,7 +82,7 @@
         <button class="btn-book" disabled>Reserve (coming soon)</button>
 
         <!-- Owner-only actions -->
-        <% if (currUser && foundListing.owner._id.equals(currUser._id)) { %>
+        <% if (currUser && foundListing.owner && foundListing.owner._id.equals(currUser._id)) { %>
           <div class="owner-actions">
             <a href="/listings/<%= foundListing._id %>/edit" class="btn-edit">
               <i class="fa-solid fa-pen-to-square"></i> Edit

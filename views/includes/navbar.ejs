@@ -9,37 +9,41 @@
       <span class="brand-name">Wander<span>Nest</span></span>
     </a>
 
-    <!-- Mobile toggler -->
-    <button class="navbar-toggler border-0 shadow-none" type="button"
-      data-bs-toggle="collapse" data-bs-target="#mainNav"
-      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Mobile: show search icon + toggler side by side -->
+    <div class="d-flex d-md-none align-items-center gap-2 ms-auto">
+     
+      <button class="navbar-toggler border-0 shadow-none p-1" type="button"
+        data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
 
     <div class="collapse navbar-collapse" id="mainNav">
 
-      <!-- Search bar (center) -->
-      <div class="mx-auto my-2 my-md-0">
+      <!-- Search bar (desktop center / mobile full-width) -->
+      <div class="search-wrap mx-md-auto my-2 my-md-0">
         <form class="search-bar" role="search" action="/listings" method="GET">
-          <i class="fa-solid fa-magnifying-glass search-icon-inside"></i>
-          <input class="form-control search-inp" type="search" name="search"
-            placeholder="Search destinations…" autocomplete="off">
+          <div class="input-with-icon">
+            <input class="form-control search-inp" type="search" name="search"
+              placeholder="Search destinations…" autocomplete="off">
+          </div>
           <button class="btn btn-search" type="submit">Search</button>
         </form>
       </div>
 
       <!-- Right nav -->
-      <div class="navbar-nav align-items-md-center gap-1 ms-md-2">
+      <div class="navbar-nav align-items-md-center gap-1 ms-md-2 nav-actions">
         <% if (currUser) { %>
           <a class="nav-link btn-nav-add" href="/listings/new">
             <i class="fa-solid fa-plus me-1"></i>List a Stay
           </a>
-          <span class="nav-link text-muted d-none d-md-inline" style="font-size:0.78rem;">
+          <span class="nav-greeting d-none d-md-inline">
             Hi, <%= currUser.username %>
           </span>
           <a class="nav-link btn-nav-login" href="/logout">Log Out</a>
         <% } else { %>
-          <a class="nav-link" href="/listings/new">List a Stay</a>
+          <a class="nav-link nav-link-plain" href="/listings/new">List a Stay</a>
           <a class="nav-link btn-nav-login" href="/login">Log In</a>
           <a class="nav-link btn-nav-signup" href="/signup">Sign Up</a>
         <% } %>

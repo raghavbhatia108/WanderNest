@@ -1,11 +1,17 @@
+const path = require("path");
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+}
+
 const mongoose = require("mongoose");
 const initData = require("./data");
 const listing = require("../models/listing.js");
 
-const mongoURL = 'mongodb://127.0.0.1:27017/travelbnb';
+const mongoURL = process.env.ATLASDB_URL || 'mongodb://127.0.0.1:27017/travelbnb';
 
 main().then(()=>{
-    console.log("Connected to DB");
+    console.log("Connected to DB", mongoURL);
 })
 .catch(err => console.log(err));
 
