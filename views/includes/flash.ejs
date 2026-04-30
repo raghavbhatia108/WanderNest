@@ -1,12 +1,32 @@
-<% if(success && success.length){ %>
-    <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
-    <%= success %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<%}%>
-<% if (error && error.length > 0) { %>
-    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3">
-      <%= error %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="flash-container" id="flashContainer">
+  <% if (success && success.length) { %>
+    <div class="flash-msg success" id="flashSuccess">
+      <i class="fa-solid fa-circle-check flash-icon"></i>
+      <span class="flash-text"><%= success %></span>
+      <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
   <% } %>
+  <% if (error && error.length > 0) { %>
+    <div class="flash-msg error" id="flashError">
+      <i class="fa-solid fa-circle-exclamation flash-icon"></i>
+      <span class="flash-text"><%= error %></span>
+      <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  <% } %>
+</div>
+
+<script>
+  // Auto-dismiss flash messages after 4 seconds
+  setTimeout(() => {
+    document.querySelectorAll('.flash-msg').forEach(el => {
+      el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      el.style.opacity = '0';
+      el.style.transform = 'translateX(120%)';
+      setTimeout(() => el.remove(), 400);
+    });
+  }, 4000);
+</script>
